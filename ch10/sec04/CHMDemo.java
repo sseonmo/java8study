@@ -21,15 +21,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CHMDemo {
-    public static ConcurrentHashMap<String, Long> map = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<String, Long> map = new ConcurrentHashMap<>();
 
-    public static void process(Path path) {
-        try {
-            String contents = new String(Files.readAllBytes(path),
-                StandardCharsets.UTF_8);
-            for (String word : contents.split("\\PL+")) {
-                map.merge(word, 1L, Long::sum);
-                // or map.compute(word, (k, v) -> v == null ? 1 : v + 1);
+	public static void process(Path path) {
+		try {
+			String contents = new String(Files.readAllBytes(path),
+					StandardCharsets.UTF_8);
+			for (String word : contents.split("\\PL+")) {
+				map.merge(word, 1L, Long::sum);
+				// or map.compute(word, (k, v) -> v == null ? 1 : v + 1);
                 /* or
                 map.putIfAbsent(word, 0L);
                 Long oldValue, newValue;
@@ -43,27 +43,28 @@ public class CHMDemo {
                 Long newValue = oldValue == null ? 1 : oldValue + 1;
                 map.put(word, newValue); // Error—might not replace oldValue                                
                 */
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public static Set<Path> descendants(Path p) throws IOException {        
-        try (Stream<Path> entries = Files.walk(p)) {
-            return entries.filter(Files::isRegularFile).collect(Collectors.toSet());
-        }
-    }
-    
-    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
-        int processors = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(processors);
-        Path pathToRoot = Paths.get(".");
-        for (Path p : descendants(pathToRoot)) {
-            executor.execute(() -> process(p));
-        }        
-        executor.shutdown();
-        executor.awaitTermination(10, TimeUnit.MINUTES);
-        System.out.println(map);
-    }
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static Set<Path> descendants(Path p) throws IOException {
+		try (Stream<Path> entries = Files.walk(p)) {
+			return entries.filter(Files::isRegularFile).collect(Collectors.toSet());
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
+		int processors = Runtime.getRuntime().availableProcessors();
+		ExecutorService executor = Executors.newFixedThreadPool(processors);
+		Path pathToRoot = Paths.get(".");
+		for (Path p : descendants(pathToRoot)) {
+			executor.execute(() -> process(p));
+		}
+
+		executor.shutdown();
+		executor.awaitTermination(10, TimeUnit.MINUTES);
+		System.out.println(map);
+	}
 }

@@ -44,5 +44,6 @@ public class FilterMapDemo {
 
         Stream<String> letters = Stream.of(song).flatMap(w -> letters(w));
         show("letters", letters);
+
     }
 }

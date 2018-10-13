@@ -37,10 +37,13 @@ public class ReductionDemo {
 		int result = words.stream().reduce(
 				0,
 				(total, word) -> {
-					System.out.println(total+" || "+word.length());
+					System.out.print(total+" || "+word.length());
 					return total + word.length();
 				},
-				(total1, total2) -> total1 + total2);
+				(total1, total2) -> {
+					System.out.println(total1+" // "+total2);
+					return total1 + total2;
+				});
 
 		System.out.println("result: " + result);
 	}

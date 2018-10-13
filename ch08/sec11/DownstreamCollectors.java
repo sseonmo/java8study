@@ -5,12 +5,7 @@ import com.sun.deploy.util.StringUtils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.IntSummaryStatistics;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
@@ -60,7 +55,6 @@ public class DownstreamCollectors {
 				groupingBy(Locale::getCountry, counting()));
 		System.out.println("countryToLocaleCounts: " + countryToLocaleCounts);
 
-
 		Stream<City> cities = readCities("cities.txt");
 		Map<String, Integer> stateToCityPopulation = cities.collect(
 				groupingBy(City::getState, summingInt(City::getPopulation)));
@@ -70,9 +64,10 @@ public class DownstreamCollectors {
 		Map<String, Optional<String>> stateToLongestCityName = cities.collect(
 				groupingBy(City::getState,
 						mapping(City::getName,
-								minBy(Comparator.comparing(String::length)))));
+								maxBy(Comparator.comparing(String::length)))));
 
 		System.out.println("stateToLongestCityName: " + stateToLongestCityName);
+/*
 
 		locales = Stream.of(Locale.getAvailableLocales());
 		Map<String, Set<String>> countryToLanguages = locales.filter( l -> l.getDisplayCountry().trim().length() > 0)
@@ -101,6 +96,6 @@ public class DownstreamCollectors {
 				groupingBy(City::getState,
 						mapping(City::getName,
 								joining(", "))));
-		System.out.println("stateToCityNames: " + stateToCityNames);
+		System.out.println("stateToCityNames: " + stateToCityNames);*/
 	}
 }

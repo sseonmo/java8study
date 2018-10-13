@@ -50,7 +50,7 @@ public class OptionalDemo {
 		System.out.println(Arrays.toString(results.toArray()));
 
 
-		System.out.println(inverse(4.0).flatMap(OptionalDemo::squareRoot));	//notempty
+		System.out.println(inverse(4.0).flatMap(OptionalDemo::squareRoot));	//not empty
 		System.out.println(inverse(-1.0).flatMap(OptionalDemo::squareRoot));	//empty
 		System.out.println(inverse(0.0).flatMap(OptionalDemo::squareRoot));	//empty
 		Optional<Double> result2 = Optional.of(-4.0)

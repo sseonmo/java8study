@@ -21,5 +21,6 @@ public class GroupingPartitioning {
 
 		System.out.println("English locales: " + englishAndOtherLocales.get(true));
 		System.out.println("not use English locales: " + englishAndOtherLocales.get(false));
+
 	}
 }
