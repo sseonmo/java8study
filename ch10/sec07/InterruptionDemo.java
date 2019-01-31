@@ -29,6 +29,7 @@ public class InterruptionDemo {
 				throw new RuntimeException();
 			else
 				a = a.add(big(1));
+//			System.out.println(a.toString());
 		}
 		return n;
 	}
@@ -41,6 +42,7 @@ public class InterruptionDemo {
 			tasks.add(() -> isPrime(n));
 		}
 		BigInteger result = executor.invokeAny(tasks);
+
 		System.out.println(result + " is prime");
 	}
 }
