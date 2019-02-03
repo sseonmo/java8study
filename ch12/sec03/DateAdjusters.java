@@ -7,8 +7,8 @@ import java.time.temporal.TemporalAdjusters;
 
 public class DateAdjusters {
     public static void main(String[] args) {
-        int year = 2014;
-        int month = 6;
+        int year = 2019;
+        int month = 1;
         LocalDate firstTuesday = LocalDate.of(year, month, 1).with(
                 TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
         System.out.println("firstTuesday: " + firstTuesday);
