@@ -1,6 +1,8 @@
 package ch12.sec04;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 public class LocalTimes {
 	public static void main(String[] args) {
@@ -13,5 +15,8 @@ public class LocalTimes {
 
 		LocalTime wakeup = bedtime.plusHours(8); // wakeup is 6:30
 		System.out.println("wakeup: " + wakeup);
+
+		System.out.println(LocalDateTime.now());
+		System.out.println(LocalDateTime.now().atZone(ZoneId.of("Africa/Cairo")));
 	}
 }
